@@ -81,10 +81,11 @@
         
         slideshowContainer.innerHTML = '';
         
-        const imgElement = document.createElement("url onepage");
-        imgElement.src = slides[slideIndex]["url onepage"];  // 👈 ใช้ชื่อใหม่ "url One page"
+        const imgElement = document.createElement("img");
+        imgElement.src = slides[slideIndex]["url onepage"]; // ✔️ ตอนนี้จะทำงานได้
         imgElement.classList.add("fade");
         slideshowContainer.appendChild(imgElement);
+
 
         slideIndex++;
         if (slideIndex >= slides.length) slideIndex = 0;
