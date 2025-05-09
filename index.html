@@ -83,22 +83,26 @@ function showSlides() {
     
     // ✅ สร้าง img Element
 function showSlides() {
-    if (slides.length === 0) return;
+    console.log("🔍 กำลังเรียก showSlides..."); // ตรวจสอบว่าฟังก์ชันทำงานหรือไม่
+    console.log("🚀 ข้อมูลที่ได้จาก slides:", slides); // ดูข้อมูลทั้งหมดที่ได้จาก API
+    
+    if (slides.length === 0) {
+        console.log("⚠️ ไม่มีข้อมูลใน slides");
+        return;
+    }
 
+    slideshowContainer.innerHTML = '';  // ล้างข้อมูลเก่าออก
+    
     const imgElement = document.createElement("img");
     imgElement.src = slides[slideIndex]["url"];
     imgElement.classList.add("fade");
     slideshowContainer.appendChild(imgElement);
 
-    console.log("ภาพที่สร้าง:", imgElement);  // ✅ ดูว่าภาพสร้างได้ไหม
-}
+    console.log("✅ สร้างภาพสำเร็จ:", imgElement); // ตรวจสอบการสร้าง <img>
 
-
-    // ✅ ปรับ index สำหรับภาพถัดไป
     slideIndex++;
     if (slideIndex >= slides.length) slideIndex = 0;
-    
-    // ✅ หน่วงเวลา 3 วินาที แล้วเปลี่ยนภาพ
+
     setTimeout(showSlides, 3000);
 }
 
