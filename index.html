@@ -40,7 +40,7 @@
 <div id="slideshow-container"></div>
 
 <script>
-    const sheetURL = 'https://script.google.com/macros/s/AKfycbwwnBCKbuiBPewLkwFr9HURoLkioDy_UEdd8uvXsxN-C8ypxPfmZPlePzJIzxWCKtXE/exec';
+    const sheetURL = 'https://script.google.com/macros/s/AKfycbysRFBETkNq7oSmn_ERgttlxHd2kkqchzRNLJ87QeLVRuweaxbHjpZh0YX_utp3tJ_x/exec';
     const slideshowContainer = document.getElementById('slideshow-container');
     const districtFilter = document.getElementById('districtFilter');
     let slideIndex = 0;
@@ -82,7 +82,7 @@
         slideshowContainer.innerHTML = '';
         
         const imgElement = document.createElement("img");
-        imgElement.src = slides[slideIndex]["url One page"];  // 👈 ใช้ชื่อใหม่ "url One page"
+        imgElement.src = slides[slideIndex]["url one page"];  // 👈 ใช้ชื่อใหม่ "url One page"
         imgElement.classList.add("fade");
         slideshowContainer.appendChild(imgElement);
 
