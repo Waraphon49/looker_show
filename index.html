@@ -50,7 +50,7 @@
         .then(response => response.json())
         .then(data => {
             // 👉 สร้างรายการ Dropdown จากคอลัมน์ "ผู้กรอก"
-            const users = [...new Set(data.map(item => item["ผู้กรอก"]))];
+            const users = [...new Set(data.map(item => item["ผู้กรอก (สสอ.)"]))];
             users.forEach(user => {
                 const option = document.createElement('option');
                 option.value = user;
@@ -68,7 +68,7 @@
                 if (selectedUser === 'all') {
                     slides = data;
                 } else {
-                    slides = data.filter(item => item["ผู้กรอก"] === selectedUser);
+                    slides = data.filter(item => item["ผู้กรอก (สสอ.)"] === selectedUser);
                 }
                 slideIndex = 0;
                 showSlides();
@@ -81,8 +81,8 @@
         
         slideshowContainer.innerHTML = '';
         
-        const imgElement = document.createElement("url one page");
-        imgElement.src = slides[slideIndex]["url one page"];  // 👈 ใช้ชื่อใหม่ "url One page"
+        const imgElement = document.createElement("url onepage");
+        imgElement.src = slides[slideIndex]["url onepage"];  // 👈 ใช้ชื่อใหม่ "url One page"
         imgElement.classList.add("fade");
         slideshowContainer.appendChild(imgElement);
 
