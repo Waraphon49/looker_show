@@ -76,22 +76,27 @@
         });
 
     // 👉 ฟังก์ชันแสดงภาพแบบ Slideshow
-    function showSlides() {
-        if (slides.length === 0) return;
-        
-        slideshowContainer.innerHTML = '';
-        
-        const imgElement = document.createElement("img");
-        imgElement.src = slides[slideIndex]["url"]; // ✔️ ตอนนี้จะทำงานได้
-        imgElement.classList.add("fade");
-        slideshowContainer.appendChild(imgElement);
+function showSlides() {
+    if (slides.length === 0) return;
+    
+    slideshowContainer.innerHTML = '';
+    
+    // ✅ สร้าง img Element
+    const imgElement = document.createElement("img");
+    imgElement.src = slides[slideIndex]["url"]; // <-- อ้างอิงให้ถูกต้อง
+    imgElement.classList.add("fade");
+    
+    // ✅ แสดงผลใน Container
+    slideshowContainer.appendChild(imgElement);
 
+    // ✅ ปรับ index สำหรับภาพถัดไป
+    slideIndex++;
+    if (slideIndex >= slides.length) slideIndex = 0;
+    
+    // ✅ หน่วงเวลา 3 วินาที แล้วเปลี่ยนภาพ
+    setTimeout(showSlides, 3000);
+}
 
-        slideIndex++;
-        if (slideIndex >= slides.length) slideIndex = 0;
-        
-        setTimeout(showSlides, 3000);
-    }
 </script>
 
 </body>
