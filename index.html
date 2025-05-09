@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        /* การจัดรูปแบบ Slideshow */
         #slideshow-container {
             max-width: 600px;
             position: relative;
@@ -33,23 +34,33 @@
 </head>
 <body>
 
+<!-- Dropdown สำหรับเลือกผู้กรอก -->
 <select id="districtFilter">
     <option value="all">-- All Users --</option>
 </select>
 
+<!-- พื้นที่แสดงภาพ Slideshow -->
 <div id="slideshow-container"></div>
 
 <script>
+    // 🔗 URL ของ Google Sheets API
     const sheetURL = 'https://script.google.com/macros/s/AKfycbxAc3yK3o_D0R9w0GP97Hr6M2OC9npYfd5zzPUi4rbfr9op5tsgvz99wf72Fg_EDdfv/exec';
+    
+    // 🎯 Element ที่จะใช้งาน
     const slideshowContainer = document.getElementById('slideshow-container');
     const districtFilter = document.getElementById('districtFilter');
+    
+    // 🎞️ ตัวแปรเก็บข้อมูล Slideshow
     let slideIndex = 0;
     let slides = [];
+    let allSlides = [];
+    let slideInterval;
 
+    // 🌐 ดึงข้อมูลจาก Google Sheets
     fetch(sheetURL)
         .then(response => response.json())
         .then(data => {
-            // 👉 สร้างรายการ Dropdown จากคอลัมน์ "ผู้กรอก"
+            // 🎯 สร้างรายการ Dropdown จากคอลัมน์ "ผู้กรอก"
             const users = [...new Set(data.map(item => item["ผู้กรอก"]))];
             users.forEach(user => {
                 const option = document.createElement('option');
@@ -58,44 +69,47 @@
                 districtFilter.appendChild(option);
             });
 
-            // 👉 กำหนด Slides เป็นข้อมูลทั้งหมดจาก Google Sheets
-            slides = data;
-            showSlides();
+            // 🎞️ กำหนด Slides และ AllSlides ให้พร้อมใช้งาน
+            allSlides = data;
+            slides = allSlides;
+            startSlideshow();
 
-            // 👉 เมื่อเลือก Filter ใหม่ ให้เปลี่ยนข้อมูลที่แสดง
+            // 🔄 เมื่อเลือก Filter ใหม่
             districtFilter.addEventListener('change', () => {
                 const selectedUser = districtFilter.value;
                 if (selectedUser === 'all') {
-                    slides = data;
+                    slides = allSlides;
                 } else {
-                    slides = data.filter(item => item["ผู้กรอก"] === selectedUser);
+                    slides = allSlides.filter(item => item["ผู้กรอก"] === selectedUser);
                 }
                 slideIndex = 0;
-                showSlides();
+                startSlideshow();
             });
         });
 
-    // 👉 ฟังก์ชันแสดงภาพแบบ Slideshow
-function showSlides() {
-    if (slides.length === 0) return;
-    
-    slideshowContainer.innerHTML = '';
-    
-    // ✅ สร้าง img Element
-function showSlides() {
-    if (slides.length === 0) return;
+    // 🎥 ฟังก์ชันเริ่ม Slideshow ใหม่
+    function startSlideshow() {
+        if (slideInterval) clearInterval(slideInterval); // เคลียร์ตัวเก่า
+        if (slides.length === 0) {
+            slideshowContainer.innerHTML = "<p>ไม่พบข้อมูลที่ตรงกัน</p>";
+            return;
+        }
+        
+        slideInterval = setInterval(showSlides, 3000);
+        showSlides();
+    }
 
-    const imgElement = document.createElement("img");
-    imgElement.src = slides[slideIndex]["url"];
-    imgElement.classList.add("fade");
-    slideshowContainer.appendChild(imgElement);
+    // 🎯 ฟังก์ชันแสดงภาพใน Slideshow
+    function showSlides() {
+        slideshowContainer.innerHTML = ''; // เคลียร์ภาพเก่า
+        
+        const imgElement = document.createElement("img");
+        imgElement.src = slides[slideIndex]["url"];
+        imgElement.classList.add("fade");
+        slideshowContainer.appendChild(imgElement);
 
-    console.log("ภาพที่สร้าง:", imgElement);  // ✅ ดูว่าภาพสร้างได้ไหม
-
-    setTimeout(showSlides, 3000);
-}
-
-
+        slideIndex = (slideIndex + 1) % slides.length; // วน Loop ภาพ
+    }
 </script>
 
 </body>
