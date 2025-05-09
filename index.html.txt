@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #slideshow-container {
+            max-width: 600px;
+            position: relative;
+            margin: auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        #slideshow-container img {
+            width: 100%;
+            height: auto;
+        }
+        #districtFilter {
+            display: block;
+            margin: 20px auto;
+            padding: 5px;
+            width: 250px;
+        }
+        .fade {
+            animation: fadeEffect 1s;
+        }
+        @keyframes fadeEffect {
+            from { opacity: 0.4 } 
+            to { opacity: 1 }
+        }
+    </style>
+</head>
+<body>
+
+<select id="districtFilter">
+    <option value="all">-- All Districts --</option>
+</select>
+
+<div id="slideshow-container"></div>
+
+<script>
+    const sheetURL = 'https://script.google.com/macros/s/AKfycbz9YlVSjgybazqfqW-844Nc1AYsqUR2wz3ehu7mFlP4oiHbvEHZbH0Pu2knCKTYdUnO/exec';
+    const slideshowContainer = document.getElementById('slideshow-container');
+    const districtFilter = document.getElementById('districtFilter');
+    let slideIndex = 0;
+    let slides = [];
+
+    fetch(sheetURL)
+        .then(response => response.json())
+        .then(data => {
+            const districts = [...new Set(data.map(item => item.district))];
+            districts.forEach(district => {
+                const option = document.createElement('option');
+                option.value = district;
+                option.textContent = district;
+                districtFilter.appendChild(option);
+            });
+
+            slides = data;
+            showSlides();
+
+            districtFilter.addEventListener('change', () => {
+                const selectedDistrict = districtFilter.value;
+                if (selectedDistrict === 'all') {
+                    slides = data;
+                } else {
+                    slides = data.filter(item => item.district === selectedDistrict);
+                }
+                slideIndex = 0;
+                showSlides();
+            });
+        });
+
+    function showSlides() {
+        if (slides.length === 0) return;
+        
+        slideshowContainer.innerHTML = '';
+        
+        const imgElement = document.createElement("img");
+        imgElement.src = slides[slideIndex].imageUrl;
+        imgElement.classList.add("fade");
+        slideshowContainer.appendChild(imgElement);
+
+        slideIndex++;
+        if (slideIndex >= slides.length) slideIndex = 0;
+        
+        setTimeout(showSlides, 3000);
+    }
+</script>
+
+</body>
+</html>

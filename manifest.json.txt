@@ -1,0 +1,12 @@
+{
+  "name": "Slideshow Visualization",
+  "description": "Custom slideshow with Google Sheets integration",
+  "data": {
+    "hidden": false
+  },
+  "components": {
+    "visualization": {
+      "url": "https://your-username.github.io/looker-slideshow/index.html"
+    }
+  }
+}
