@@ -82,12 +82,17 @@ function showSlides() {
     slideshowContainer.innerHTML = '';
     
     // ✅ สร้าง img Element
+function showSlides() {
+    if (slides.length === 0) return;
+
     const imgElement = document.createElement("img");
-    imgElement.src = slides[slideIndex]["url"]; // <-- อ้างอิงให้ถูกต้อง
+    imgElement.src = slides[slideIndex]["url"];
     imgElement.classList.add("fade");
-    
-    // ✅ แสดงผลใน Container
     slideshowContainer.appendChild(imgElement);
+
+    console.log("ภาพที่สร้าง:", imgElement);  // ✅ ดูว่าภาพสร้างได้ไหม
+}
+
 
     // ✅ ปรับ index สำหรับภาพถัดไป
     slideIndex++;
