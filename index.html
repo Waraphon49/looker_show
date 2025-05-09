@@ -50,7 +50,7 @@
         .then(response => response.json())
         .then(data => {
             // 👉 สร้างรายการ Dropdown จากคอลัมน์ "ผู้กรอก"
-            const users = [...new Set(data.map(item => item["ผู้กรอก (สสอ.)"]))];
+            const users = [...new Set(data.map(item => item["ผู้กรอก"]))];
             users.forEach(user => {
                 const option = document.createElement('option');
                 option.value = user;
@@ -68,7 +68,7 @@
                 if (selectedUser === 'all') {
                     slides = data;
                 } else {
-                    slides = data.filter(item => item["ผู้กรอก (สสอ.)"] === selectedUser);
+                    slides = data.filter(item => item["ผู้กรอก"] === selectedUser);
                 }
                 slideIndex = 0;
                 showSlides();
