@@ -6,7 +6,7 @@
   },
   "components": {
     "visualization": {
-      "url": "https://your-username.github.io/looker-slideshow/index.html"
+      "url": "https://github.com/Waraphon49/looker_show.git"
     }
   }
 }
