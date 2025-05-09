@@ -86,7 +86,7 @@ function showSlides() {
     if (slides.length === 0) return;
 
     const imgElement = document.createElement("img");
-    imgElement.src = slides[slideIndex]["url onepage"];
+    imgElement.src = slides[slideIndex]["url"];
     imgElement.classList.add("fade");
     slideshowContainer.appendChild(imgElement);
 
